@@ -59,6 +59,16 @@ class MySqlDefinition extends AbstractDefinition
     }
 
     /**
+     * @param string $arguments
+     * @return $this
+     */
+    public function arguments($arguments)
+    {
+        $this->arguments = $arguments;
+        return $this;
+    }
+
+    /**
      * @param string $query
      * @return $this
      */
