@@ -120,6 +120,16 @@ class MySqlDumpDefinition extends AbstractDefinition
     }
 
     /**
+     * @param string $bin
+     * @return $this
+     */
+    public function mysqlBin($bin)
+    {
+        $this->mysql->mysqlBin($bin);
+        return $this;
+    }
+
+    /**
      * @return $this
      */
     public function noCreateInfo()
