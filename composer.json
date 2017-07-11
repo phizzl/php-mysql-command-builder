@@ -1,0 +1,16 @@
+{
+  "name": "phizzl/mysqldump",
+  "description": "PHP mysqldump wrapper",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Phillip Schleicher",
+      "email": "the@phizzl.de",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {"Phizzl\\MySql\\": "src/"}
+  }
+}
