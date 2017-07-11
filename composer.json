@@ -1,5 +1,5 @@
 {
-  "name": "phizzl/mysqldump",
+  "name": "phizzl/mysql-definition",
   "description": "PHP mysqldump wrapper",
   "minimum-stability": "stable",
   "license": "proprietary",
