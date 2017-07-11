@@ -175,6 +175,18 @@ class MySqlDumpDefinition extends AbstractDefinition
     }
 
     /**
+     * @param array $table
+     * @return $this
+     */
+    public function addTables(array $tables)
+    {
+        foreach($tables as $table){
+            $this->addTable($table);
+        }
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getShellCommand()
