@@ -17,6 +17,16 @@ class MySqlDefinition extends AbstractDefinition
     private $query;
 
     /**
+     * @var bool
+     */
+    private $force;
+
+    /**
+     * @var string
+     */
+    private $arguments;
+
+    /**
      * MySqlDefinition constructor.
      * @param string $dbname
      */
@@ -25,6 +35,8 @@ class MySqlDefinition extends AbstractDefinition
         parent::__construct($dbname);
         $this->mysqlBin = "mysql";
         $this->query = "";
+        $this->force = false;
+        $this->arguments = "";
     }
 
     /**
@@ -34,6 +46,15 @@ class MySqlDefinition extends AbstractDefinition
     public function mysqlBin($bin)
     {
         $this->mysqlBin = $bin;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function force()
+    {
+        $this->force = true;
         return $this;
     }
 
@@ -72,6 +93,10 @@ class MySqlDefinition extends AbstractDefinition
 
         if($this->query !== ""){
             $command .= " -e " . $this->escaper->escape($this->query);
+        }
+
+        if($this->arguments !== ""){
+            $command .= " {$this->arguments}";
         }
 
         return $command;
