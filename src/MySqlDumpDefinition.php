@@ -230,7 +230,7 @@ class MySqlDumpDefinition extends AbstractDefinition
         $command .= " {$this->dbname}";
 
         if(count($this->dumpModeTables)){
-            $command .= " " . $this->getSubFilterTableCommand();
+            $command .= " \$(" . $this->getSubFilterTableCommand() . ")";
         }
 
         $command .= " > {$this->target}";
