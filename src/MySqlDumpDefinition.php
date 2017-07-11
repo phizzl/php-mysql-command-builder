@@ -253,7 +253,7 @@ class MySqlDumpDefinition extends AbstractDefinition
 
         if(count($statements['likes'])){
             foreach($statements['likes'] as $like){
-                $sql .= " AND Tables_in_{$this->dbname} {$not} LIKE \"{$like}\"";
+                $sql .= " AND Tables_in_{$this->dbname} {$not} LIKE {$like}";
             }
         }
 
