@@ -45,6 +45,11 @@ class MySqlDumpDefinition extends AbstractDefinition
     private $dumpModeTables;
 
     /**
+     * @var bool
+     */
+    private $force;
+
+    /**
      * MySqlDumpDefinition constructor.
      * @param string $dbname
      * @param string $target
@@ -60,6 +65,7 @@ class MySqlDumpDefinition extends AbstractDefinition
         $this->escaper = new ArgumentEscaper();
         $this->dumpMode = self::DUMP_MODE_EXCLUDE;
         $this->dumpModeTables = [];
+        $this->force = false;
         $this->mysql = new MySqlDefinition($dbname);
     }
 
@@ -146,6 +152,15 @@ class MySqlDumpDefinition extends AbstractDefinition
     public function dumpModeExclude()
     {
         $this->dumpMode = self::DUMP_MODE_EXCLUDE;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function force()
+    {
+        $this->force = true;
         return $this;
     }
 
