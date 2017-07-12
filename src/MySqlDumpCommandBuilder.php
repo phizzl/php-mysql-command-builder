@@ -199,7 +199,7 @@ class MySqlDumpCommandBuilder extends AbstractDefinition
     /**
      * @return string
      */
-    public function getShellCommand()
+    public function getCommand()
     {
         $command = $this->mysqldumpBin;
 
@@ -259,7 +259,7 @@ class MySqlDumpCommandBuilder extends AbstractDefinition
 
         $this->mysql->query($sql);
 
-        return $this->mysql->getShellCommand();
+        return $this->mysql->getCommand();
     }
 
     /**

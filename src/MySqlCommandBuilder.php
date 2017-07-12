@@ -81,7 +81,7 @@ class MySqlCommandBuilder extends AbstractDefinition
     /**
      * @return string
      */
-    public function getShellCommand()
+    public function getCommand()
     {
         $command = "{$this->mysqlBin} -B -N";
 
