@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Phizzl\MySql;
+namespace Phizzl\MySqlCommandBuilder;
 
 
 class MySqlDefinition extends AbstractDefinition

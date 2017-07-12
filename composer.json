@@ -11,6 +11,6 @@
     }
   ],
   "autoload": {
-    "psr-4": {"Phizzl\\MySql\\": "src/"}
+    "psr-4": {"Phizzl\\MySqlCommandBuilder\\": "src/"}
   }
 }
