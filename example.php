@@ -1,11 +1,11 @@
 <?php
 
 
-use Phizzl\MySql\MySqlDumpDefinition;
+use Phizzl\MySqlCommandBuilder\MySqlDumpCommandBuilder;
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$dumpDefinition = new MySqlDumpDefinition("testdb", "dump.sql");
+$dumpDefinition = new MySqlDumpCommandBuilder("testdb", "dump.sql");
 
 $dumpDefinition
     ->user("myuser")
@@ -17,4 +17,4 @@ $dumpDefinition
     ->addTable('oxv_*')
     ->addTable('testtable');
 
-echo $dumpDefinition->getShellCommand();
+echo $dumpDefinition->getCommand();
