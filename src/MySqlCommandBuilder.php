@@ -4,7 +4,7 @@
 namespace Phizzl\MySqlCommandBuilder;
 
 
-class MySqlDefinition extends AbstractDefinition
+class MySqlCommandBuilder extends AbstractDefinition
 {
     /**
      * @var string

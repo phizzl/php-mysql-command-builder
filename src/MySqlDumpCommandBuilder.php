@@ -3,7 +3,7 @@
 namespace Phizzl\MySqlCommandBuilder;
 
 
-class MySqlDumpDefinition extends AbstractDefinition
+class MySqlDumpCommandBuilder extends AbstractDefinition
 {
     const DUMP_MODE_INCLUDE = "incl";
 
@@ -30,7 +30,7 @@ class MySqlDumpDefinition extends AbstractDefinition
     private $mysqldumpBin;
 
     /**
-     * @var MySqlDefinition
+     * @var MySqlCommandBuilder
      */
     private $mysql;
 
@@ -66,7 +66,7 @@ class MySqlDumpDefinition extends AbstractDefinition
         $this->dumpMode = self::DUMP_MODE_EXCLUDE;
         $this->dumpModeTables = [];
         $this->force = false;
-        $this->mysql = new MySqlDefinition($dbname);
+        $this->mysql = new MySqlCommandBuilder($dbname);
     }
 
     /**
