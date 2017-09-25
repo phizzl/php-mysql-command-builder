@@ -85,6 +85,10 @@ class MySqlCommandBuilder extends AbstractDefinition
     {
         $command = "{$this->mysqlBin} -B -N";
 
+        if($this->force){
+            $command .= " --force";
+        }
+
         if($this->host !== ""){
             $command .= " --host=" . $this->escaper->escape($this->host);
         }
