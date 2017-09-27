@@ -27,6 +27,11 @@ class MySqlCommandBuilder extends AbstractDefinition
     private $arguments;
 
     /**
+     * @var string
+     */
+    private $importDump;
+
+    /**
      * MySqlDefinition constructor.
      * @param string $dbname
      */
@@ -37,6 +42,7 @@ class MySqlCommandBuilder extends AbstractDefinition
         $this->query = "";
         $this->force = false;
         $this->arguments = "";
+        $this->importDump = "";
     }
 
     /**
@@ -79,6 +85,16 @@ class MySqlCommandBuilder extends AbstractDefinition
     }
 
     /**
+     * @param string $importDump
+     * @return $this
+     */
+    public function importDump($importDump)
+    {
+        $this->importDump = $importDump;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getCommand()
@@ -111,6 +127,12 @@ class MySqlCommandBuilder extends AbstractDefinition
 
         if($this->arguments !== ""){
             $command .= " {$this->arguments}";
+        }
+
+        $command .= " {$this->dbname}";
+
+        if(strlen($this->importDump)){
+            $command .= " < {$this->importDump}";
         }
 
         return $command;
