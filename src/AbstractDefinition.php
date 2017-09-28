@@ -35,18 +35,12 @@ abstract class AbstractDefinition
     protected $dbname;
 
     /**
-     * @var ArgumentEscaper
-     */
-    protected $escaper;
-
-    /**
      * AbstractDefinition constructor.
      * @param string $dbname
      */
     public function __construct($dbname)
     {
         $this->dbname = $dbname;
-        $this->escaper = new ArgumentEscaper();
         $this->host = "";
         $this->port = 0;
         $this->user = "";

@@ -3,6 +3,9 @@
 namespace Phizzl\MySqlCommandBuilder;
 
 
+use Phizzl\PhpShellCommand\ShellCommand;
+use Phizzl\PhpShellCommand\ShellCommandBuilder;
+
 class MySqlDumpCommandBuilder extends AbstractDefinition
 {
     const DUMP_MODE_INCLUDE = "incl";
@@ -62,7 +65,6 @@ class MySqlDumpCommandBuilder extends AbstractDefinition
         $this->noCreateInfo = false;
         $this->noData = false;
         $this->mysqldumpBin = "mysqldump";
-        $this->escaper = new ArgumentEscaper();
         $this->dumpMode = self::DUMP_MODE_EXCLUDE;
         $this->dumpModeTables = [];
         $this->force = false;
@@ -75,8 +77,10 @@ class MySqlDumpCommandBuilder extends AbstractDefinition
      */
     public function host($host)
     {
+        parent::host($host);
         $this->mysql->host($host);
-        return parent::host($host);
+
+        return $this;
     }
 
     /**
@@ -85,8 +89,10 @@ class MySqlDumpCommandBuilder extends AbstractDefinition
      */
     public function port($port)
     {
+        parent::port($port);
         $this->mysql->port($port);
-        return parent::port($port);
+
+        return $this;
     }
 
     /**
@@ -95,8 +101,10 @@ class MySqlDumpCommandBuilder extends AbstractDefinition
      */
     public function user($user)
     {
+        parent::user($user);
         $this->mysql->user($user);
-        return parent::user($user);
+
+        return $this;
     }
 
     /**
@@ -105,8 +113,10 @@ class MySqlDumpCommandBuilder extends AbstractDefinition
      */
     public function password($password)
     {
+        parent::password($password);
         $this->mysql->password($password);
-        return parent::password($password);
+
+        return $this;
     }
 
     /**
@@ -197,53 +207,53 @@ class MySqlDumpCommandBuilder extends AbstractDefinition
     }
 
     /**
-     * @return string
+     * @return ShellCommand
      */
     public function getCommand()
     {
-        $command = $this->mysqldumpBin;
+        $cmdBuilder = new ShellCommandBuilder($this->mysqldumpBin);
 
         if($this->force){
-            $command .= " --force";
+            $cmdBuilder->addOption('--force');
         }
 
         if($this->host !== ""){
-            $command .= " --host=" . $this->escaper->escape($this->host);
+            $cmdBuilder->addOption('--host', $this->host);
         }
 
         if($this->port > 0){
-            $command .= " --port=" . $this->escaper->escape($this->port);
+            $cmdBuilder->addOption('--port', $this->port);
         }
 
         if($this->user !== ""){
-            $command .= " --user=" . $this->escaper->escape($this->user);
+            $cmdBuilder->addOption('--user', $this->user);
         }
 
         if($this->password !== ""){
-            $command .= " --password=" . $this->escaper->escape($this->password);
+            $cmdBuilder->addOption('--password', $this->password);
         }
 
         if($this->noCreateInfo){
-            $command .= " --no-create-info";
+            $cmdBuilder->addOption('--no-create-info');
         }
 
         if($this->noData){
-            $command .= " --no-data";
+            $cmdBuilder->addOption('--no-data');
         }
 
-        $command .= " {$this->dbname}";
+        $cmdBuilder->addArgument($this->dbname);
 
         if(count($this->dumpModeTables)){
-            $command .= " \$(" . $this->getSubFilterTableCommand() . ")";
+            $cmdBuilder->addOption("\$(" . $this->getSubFilterTableCommand()->getCommand() . ")");
         }
 
-        $command .= " > {$this->target}";
+        $cmdBuilder->redirectOutputTo($this->target);
 
-        return $command;
+        return $cmdBuilder->buildCommand();
     }
 
     /**
-     * @return string
+     * @return ShellCommand
      */
     private function getSubFilterTableCommand()
     {

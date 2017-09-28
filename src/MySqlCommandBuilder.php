@@ -4,6 +4,9 @@
 namespace Phizzl\MySqlCommandBuilder;
 
 
+use Phizzl\PhpShellCommand\ShellCommand;
+use Phizzl\PhpShellCommand\ShellCommandBuilder;
+
 class MySqlCommandBuilder extends AbstractDefinition
 {
     /**
@@ -95,46 +98,51 @@ class MySqlCommandBuilder extends AbstractDefinition
     }
 
     /**
-     * @return string
+     * @return ShellCommand
      */
     public function getCommand()
     {
-        $command = "{$this->mysqlBin} -B -N";
+        $cmdBuilder = new ShellCommandBuilder($this->mysqlBin);
+        $cmdBuilder
+            ->addOption('-B')
+            ->addOption('-N');
 
         if($this->force){
-            $command .= " --force";
+            $cmdBuilder->addOption('--force');
         }
 
         if($this->host !== ""){
-            $command .= " --host=" . $this->escaper->escape($this->host);
+            $cmdBuilder->addOption('--host', $this->host);
         }
 
         if($this->port > 0){
-            $command .= " --port=" . $this->escaper->escape($this->port);
+            $cmdBuilder->addOption('--port', $this->port);
         }
 
         if($this->user !== ""){
-            $command .= " --user=" . $this->escaper->escape($this->user);
+            $cmdBuilder->addOption('--user', $this->user);
         }
 
         if($this->password !== ""){
-            $command .= " --password=" . $this->escaper->escape($this->password);
+            $cmdBuilder->addOption('--password', $this->password);
         }
 
         if($this->query !== ""){
-            $command .= " -e " . $this->escaper->escape($this->query);
+            $cmdBuilder->addOption('-e', $this->query, ShellCommandBuilder::OPTION_ASSIGN_SPACE);
         }
 
         if($this->arguments !== ""){
-            $command .= " {$this->arguments}";
+            foreach(explode(" ", $this->arguments) as $arg){
+                $cmdBuilder->addArgument($arg);
+            }
         }
 
-        $command .= " {$this->dbname}";
+        $cmdBuilder->addArgument($this->dbname);
 
         if(strlen($this->readFromFile)){
-            $command .= " < {$this->readFromFile}";
+            $cmdBuilder->readFromFile($this->readFromFile);
         }
 
-        return $command;
+        return $cmdBuilder->buildCommand();
     }
 }

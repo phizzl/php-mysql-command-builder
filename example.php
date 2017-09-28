@@ -17,4 +17,4 @@ $dumpDefinition
     ->addTable('oxv_*')
     ->addTable('testtable');
 
-echo $dumpDefinition->getCommand();
+echo $dumpDefinition->getCommand()->getCommand();
