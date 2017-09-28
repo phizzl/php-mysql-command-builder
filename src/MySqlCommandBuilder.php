@@ -29,7 +29,7 @@ class MySqlCommandBuilder extends AbstractDefinition
     /**
      * @var string
      */
-    private $importDump;
+    private $readFromFile;
 
     /**
      * MySqlDefinition constructor.
@@ -42,7 +42,7 @@ class MySqlCommandBuilder extends AbstractDefinition
         $this->query = "";
         $this->force = false;
         $this->arguments = "";
-        $this->importDump = "";
+        $this->readFromFile = "";
     }
 
     /**
@@ -85,12 +85,12 @@ class MySqlCommandBuilder extends AbstractDefinition
     }
 
     /**
-     * @param string $importDump
+     * @param string $readFromFile
      * @return $this
      */
-    public function importDump($importDump)
+    public function readFromFile($readFromFile)
     {
-        $this->importDump = $importDump;
+        $this->importDump = $readFromFile;
         return $this;
     }
 
@@ -131,8 +131,8 @@ class MySqlCommandBuilder extends AbstractDefinition
 
         $command .= " {$this->dbname}";
 
-        if(strlen($this->importDump)){
-            $command .= " < {$this->importDump}";
+        if(strlen($this->readFromFile)){
+            $command .= " < {$this->readFromFile}";
         }
 
         return $command;
