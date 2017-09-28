@@ -4,7 +4,10 @@
 namespace Phizzl\MySqlCommandBuilder;
 
 
-class AbstractDefinition
+use Phizzl\PhpShellCommand\ExecTimeout;
+use Phizzl\PhpShellCommand\ShellCommand;
+
+abstract class AbstractDefinition
 {
     /**
      * @var string
@@ -88,5 +91,20 @@ class AbstractDefinition
     {
         $this->password = $password;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    abstract public function getCommand();
+
+    /**
+     * @param int $execTimeout
+     * @return array|\Phizzl\PhpShellCommand\ShellCommandResult
+     */
+    public function execute($execTimeout = 1800)
+    {
+        $cmd = new ShellCommand($this->getCommand(), null, new ExecTimeout($execTimeout));
+        return $cmd->run();
     }
 }
