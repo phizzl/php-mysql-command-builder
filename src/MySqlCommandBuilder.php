@@ -93,7 +93,7 @@ class MySqlCommandBuilder extends AbstractDefinition
      */
     public function readFromFile($readFromFile)
     {
-        $this->importDump = $readFromFile;
+        $this->readFromFile = $readFromFile;
         return $this;
     }
 
