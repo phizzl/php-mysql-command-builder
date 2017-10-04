@@ -284,14 +284,15 @@ class MySqlDumpCommandBuilder extends AbstractDefinition
     {
         $list = [];
         $likes = [];
-        $replaces = ["*" => "%", "_" => "\\_"];
+
         foreach($this->dumpModeTables as $item){
-            $item = str_replace(array_keys($replaces), $replaces, $item);
+            $item = str_replace('*', '%', $item);
             $item = "\"{$item}\"";
             if(strpos($item, '%') === false){
                 $list[] = $item;
             }
             else{
+                $item = str_replace("_", "\\_", $item);
                 $likes[] = $item;
             }
         }
